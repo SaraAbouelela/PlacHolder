@@ -1,26 +1,19 @@
 package PlaceHolder.Tests;
 
-import static io.restassured.RestAssured.given;
-
-import java.util.ArrayList;
-import java.util.List;
-import com.google.gson.reflect.*;
 import PlaceHolder.common.EndPoints;
 import PlaceHolder.serelization.Comment;
 import PlaceHolder.serelization.Post;
 import PlaceHolder.serelization.User;
-import io.restassured.mapper.ObjectMapperType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import junit.framework.TestCase;
-import io.restassured.mapper.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import java.lang.reflect.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static io.restassured.RestAssured.given;
 
 /**
  * Unit test for simple App.
@@ -28,27 +21,6 @@ import java.lang.reflect.*;
 public class GetUserIdTest 
 {
 	int userId;
-	//    /**
-	//     * Create the test case
-	//     *
-	//     * @param testName name of the test case
-	//     */
-	//    public GetUserIdTest( String testName )
-	//    {
-	//        super( testName );
-	//    }
-	//
-	//    /**
-	//     * @return the suite of tests being tested
-	//     */
-	////    public static Test suite()
-	////    {
-	////        return new TestSuite( AppTest.class );
-	////    }
-	//
-	//    /**
-	//     * Rigourous Test :-)
-	//     */
 	@Test (enabled = false)
 	public void getUserID()
 	{
@@ -87,7 +59,12 @@ public class GetUserIdTest
 		@Test 
 		public void getPostsWithUserId() // pass user ID 
 		{
-			//Posts by user id 
+			boolean validEmail;
+			String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher;
+
+			//Posts by user id
 			Response Posts_resp = given().queryParam("userId", "9").when().get(("https://jsonplaceholder.typicode.com".concat(EndPoints.Get_Posts.toString())));
 			//System.out.println(Posts_resp.asString());
 			
@@ -102,9 +79,10 @@ public class GetUserIdTest
 				 CommentsPerPost_Path = CommentsPerPost_Resp.jsonPath();
 				List<Comment> comments_Per_Post = CommentsPerPost_Path.getList("", Comment.class);
 				for (Comment comment : comments_Per_Post) 
-				{	System.out.println("Comment Ids"+ comment.getId());
-					System.out.println(comment.getEmail());
-				}
+				{
+//					System.out.println("Comment Id "+ comment.getId());
+					matcher = pattern.matcher(comment.getEmail());
+					System.out.println(comment.getEmail() +" : "+ matcher.matches());				}
 			}
 			
 		}

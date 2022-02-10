@@ -1,7 +1,9 @@
 
 package PlaceHolder.serelization;
 
-import javax.annotation.Generated;
+import javax.annotation.*;
+import javax.annotation.processing.Generated;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
