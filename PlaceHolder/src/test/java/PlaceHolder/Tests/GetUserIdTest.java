@@ -1,32 +1,34 @@
 package PlaceHolder.Tests;
 
 import PlaceHolder.common.EndPoints;
+import PlaceHolder.common.RestAssuredConfiguration;
 import PlaceHolder.serelization.Comment;
 import PlaceHolder.serelization.Post;
 import PlaceHolder.serelization.User;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 
-/**
- * Unit test for simple App.
- */
-public class GetUserIdTest 
+public class GetUserIdTest
 {
 	int userId;
-	@Test (enabled = false)
+	@Test (priority = 1)
 	public void getUserID()
 	{
-		Response res = given().get(("https://jsonplaceholder.typicode.com".concat(EndPoints.Get_Users.toString())));
-		
-		// Way number one 
+        baseURI = "https://jsonplaceholder.typicode.com";
+//		RequestSpecification restAssuredConfiguration = new RestAssuredConfiguration().getRequestSpecification();
+//		Response res = given().spec(restAssuredConfiguration)
+//				.get(EndPoints.Get_Users.toString());
+
+		Response res = given().get(baseURI.concat(EndPoints.Get_Users));
+		// Way number one
 		JsonPath JPath = res.jsonPath();
 		List<User> users = JPath.getList("", User.class);
 		String userName; 
@@ -35,8 +37,7 @@ public class GetUserIdTest
 			userName = user.getUsername();
 			if(userName.equals("Delphine"))
 			{
-				System.out.println("here");
-				System.out.println(user.getId().toString());
+				System.out.println("User ID = " + user.getId().toString());
 			}
 		}
 		
@@ -56,7 +57,7 @@ public class GetUserIdTest
 	}
 
 	
-		@Test 
+		@Test(priority = 2)
 		public void getPostsWithUserId() // pass user ID 
 		{
 			boolean validEmail;
@@ -66,8 +67,7 @@ public class GetUserIdTest
 
 			//Posts by user id
 			Response Posts_resp = given().queryParam("userId", "9").when().get(("https://jsonplaceholder.typicode.com".concat(EndPoints.Get_Posts.toString())));
-			//System.out.println(Posts_resp.asString());
-			
+
 			JsonPath JPath = Posts_resp.jsonPath();
 			List<Post> posts = JPath.getList("", Post.class);
 			ArrayList<Integer> posts_Ids = new ArrayList<Integer>();
