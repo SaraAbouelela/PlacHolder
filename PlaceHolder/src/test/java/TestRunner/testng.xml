@@ -3,7 +3,7 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="C:/Users/Bassem/Documents/GitHub/PlacHolder">
         <classes>
-            <class name="PlaceHolder.Tests.GetUserIdTest">
+            <class name="PageObjectModel.API.GetUserId">
         <methods>
         <include name="getUserID"/>
         <include name="getPostsWithUserId"/>
