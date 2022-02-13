@@ -8,5 +8,4 @@ Feature: As tester i want to validate the emails mentioned in the posts posted b
     Then Validate the emails formats
     Examples:
       | UserName |
-#      | Delphine |
-      | Bret    |
+      | Delphine |

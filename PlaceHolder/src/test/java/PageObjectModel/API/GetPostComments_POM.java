@@ -52,12 +52,13 @@ public class GetPostComments_POM {
         for (Comment comment : commentsList)
         {
             System.out.println("For comment Id "+ comment.getId());
-            System.out.println("With email : "+comment.getEmail());
+            System.out.print("With email : "+comment.getEmail());
             matcher = Email_pattern.matcher(comment.getEmail());
             if(matcher.matches())
-                System.out.println(" >> This is a valid email format");
+                System.out.print(" >> This is a valid email format");
             else
-                System.out.println(" >> This is not a valid email format");
+                System.out.print(" >> This is not a valid email format");
+            System.out.println();
         }
     }
 }
