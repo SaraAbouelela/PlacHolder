@@ -5,20 +5,20 @@ jobs:
     docker:
       - image: cimg/openjdk:17.0.1
         auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          username: saramohamed2010
+          password: $26091992SaraDocker  # context / project UI env-var reference
     steps:
-      - checkout
-      - run: ./mvnw test
+       - build
+       - run: -mvn clean test
 
   build:
     docker:
       - image: cimg/openjdk:17.0.1
         auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          username: saramohamed2010
+          password: $26091992SaraDocker  # context / project UI env-var reference
     steps:
-      - checkout
+      - build
       - run: ./mvnw -Dmaven.test.skip=true package
 
 workflows:
