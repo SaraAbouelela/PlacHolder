@@ -6,15 +6,16 @@ jobs:
       - image: rvancea/maven-chrome-jdk8
 
     steps:
-       - build
-       - run: -mvn compile
+      - test
+      - run: -mvn clean test
+       
   build:
     docker:
       - image:  rvancea/maven-chrome-jdk8
     steps:
-      - test
-      - run: -mvn clean test
-
+      - build
+      - run: -mvn compile
+    
 workflows:
   version: 2
 
