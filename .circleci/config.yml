@@ -8,7 +8,6 @@ jobs:
     steps:
        - build
        - run: -mvn compile
-
   build:
     docker:
       - image:  rvancea/maven-chrome-jdk8
