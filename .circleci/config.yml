@@ -1,21 +1,32 @@
 version: 2.0
 
 jobs:
-  test:
-    docker:
-      - image: rvancea/maven-chrome-jdk8
-
-    steps:
-      - test
-      - run: -mvn clean test
-       
   build:
     docker:
-      - image:  rvancea/maven-chrome-jdk8
+      - image: cimg/openjdk:17.0.1
+        auth:
+          username: saramohamed2010
+          password: $26091992SaraDocker  # context / project UI env-var reference
     steps:
-      - build
-      - run: -mvn compile
-    
+      - checkout
+      - run: ./mvnw -Dmaven.test.skip=true package
+      - persist_to_workspace:
+         root: ./
+         paths:
+           - target/
+
+  test:
+    docker:
+      - image: cimg/openjdk:17.0.1
+        auth:
+          username: saramohamed2010
+          password: $26091992SaraDocker  # context / project UI env-var reference
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./target
+      - run: ./mvnw test
+
 workflows:
   version: 2
 
